@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
+import android.support.v7.widget.SearchView
+import android.view.*
 import com.nmp90.bghistory.myapplication.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,25 +19,29 @@ class YearsFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_years, container, false)
         rvYears = view.findViewById(R.id.rv_events_years)
         rvYears.layoutManager = LinearLayoutManager(activity)
-        val inputSearch = view.findViewById<EditText>(R.id.et_search_event_year)
 
         loadEvents()
-        inputSearch.addTextChangedListener(object : TextWatcher {
-
-            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {
-                val query = arg0.toString()
-                searchEvents(query)
-            }
-
-            override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
-
-            override fun afterTextChanged(arg0: Editable) {}
-        })
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val searchItem = menu.findItem(R.id.action_search)
+        searchItem.isVisible = true
+        val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchEvents(query ?: "")
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean  = false
+        })
     }
 
     private fun loadEvents() {

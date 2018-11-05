@@ -7,17 +7,18 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+
     <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
+            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
+            android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:titleTextColor="@color/white"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -27,17 +28,15 @@
             android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation"
-            android:layout_alignParentTop="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    />
 
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:layout_collapseMode="pin"
+            android:background="?android:attr/windowBackground"
             app:itemTextColor="@color/selector_bottom_nav_item"
             app:itemIconTint="@color/selector_bottom_nav_item"
             app:itemBackground="@color/colorPrimary"

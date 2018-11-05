@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-    <EditText
-            android:id="@+id/et_search_event_year"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/years_search_hint"
-            android:inputType="textVisiblePassword"/>
-
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_events_years"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-    />
-
-</LinearLayout>
+<android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rv_events_years"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
