@@ -5,6 +5,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 class YearMapper {
     fun toYear(document: QueryDocumentSnapshot): Year {
         val name = document.getString("name")!!
-        return Year(name)
+        val year = document.getDouble("year")!!.toInt()
+        return Year(name, year)
     }
 }

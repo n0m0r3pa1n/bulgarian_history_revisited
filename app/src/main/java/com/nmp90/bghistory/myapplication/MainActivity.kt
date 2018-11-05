@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavigation()
         setupViewPager()
 
+        setTitle(R.string.app_name)
+        setSupportActionBar(findViewById(R.id.toolbar))
+
 
         val capitalsRepository: CapitalsRepository = get()
         val disposable2 = capitalsRepository.getCapitals()
