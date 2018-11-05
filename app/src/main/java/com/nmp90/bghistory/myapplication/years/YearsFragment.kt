@@ -40,7 +40,10 @@ class YearsFragment : Fragment() {
                 return true
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean  = false
+            override fun onQueryTextChange(query: String?): Boolean {
+                searchEvents(query ?: "")
+                return true
+            }
         })
     }
 

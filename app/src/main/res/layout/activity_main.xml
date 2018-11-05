@@ -40,6 +40,7 @@
             app:itemTextColor="@color/selector_bottom_nav_item"
             app:itemIconTint="@color/selector_bottom_nav_item"
             app:itemBackground="@color/colorPrimary"
+            app:layout_behavior="com.nmp90.bghistory.myapplication.coordinator.BottomNavigationBehavior"
             app:menu="@menu/bottom_navigation_menu"/>
 
 </android.support.design.widget.CoordinatorLayout>
