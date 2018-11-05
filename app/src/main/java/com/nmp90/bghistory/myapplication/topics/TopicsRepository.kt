@@ -4,18 +4,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Single
 
 
-class TopicsRepository(private val db: FirebaseFirestore) {
-    fun getTopics(): Single<List<String>> {
+class TopicsRepository(private val db: FirebaseFirestore, private val topicMapper: TopicMapper) {
+    fun getTopics(): Single<List<Topic>> {
         return Single.create { emitter ->
             db.collection("topics")
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val list = mutableListOf<String>()
-                        for (document in task.result!!) {
-                            list.add(document.id)
-                        }
-                        emitter.onSuccess(list)
+                        val topics = task.result!!.map { topicMapper.toTopic(it) }
+                        emitter.onSuccess(topics)
                     } else {
                         emitter.onError(task.exception!!)
                     }
