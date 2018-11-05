@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">История на България</string>
+    <string name="capitals">Столици</string>
+    <string name="events_and_years">Събития</string>
+    <string name="periods">Периоди</string>
+
+    <string name="activity_capital_detail">Детайли за столица</string>
+
+</resources>

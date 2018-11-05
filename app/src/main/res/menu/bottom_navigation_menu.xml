@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/action_favorites"
+            android:enabled="true"
+            android:icon="@drawable/ic_calendar_range"
+            android:title="@string/periods"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/action_schedules"
+            android:enabled="true"
+            android:icon="@drawable/ic_sword"
+            android:title="@string/events_and_years"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/action_music"
+            android:enabled="true"
+            android:icon="@drawable/ic_account_states_black_24dp"
+            android:title="@string/capitals"
+            app:showAsAction="ifRoom" />
+</menu>
