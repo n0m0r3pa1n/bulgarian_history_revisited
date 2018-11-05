@@ -12,6 +12,7 @@ class TopicsRepository(private val db: FirebaseFirestore, private val topicMappe
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val topics = task.result!!.map { topicMapper.toTopic(it) }
+                            .sortedBy { it.id }
                         emitter.onSuccess(topics)
                     } else {
                         emitter.onError(task.exception!!)
