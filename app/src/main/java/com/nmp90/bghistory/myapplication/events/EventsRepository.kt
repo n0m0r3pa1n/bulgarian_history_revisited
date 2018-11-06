@@ -20,4 +20,21 @@ class EventsRepository(private val db: FirebaseFirestore, private val eventMappe
 
         }
     }
+
+    fun getEvent(eventId: String): Single<Event> {
+        return Single.create { emitter ->
+            db.collection("events")
+                .document(eventId)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val event = eventMapper.toEvent(task.result!!)
+                        emitter.onSuccess(event)
+                    } else {
+                        emitter.onError(task.exception!!)
+                    }
+                }
+
+        }
+    }
 }

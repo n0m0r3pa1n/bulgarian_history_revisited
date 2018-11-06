@@ -1,9 +1,9 @@
 package com.nmp90.bghistory.myapplication.events
 
-import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.DocumentSnapshot
 
 class EventMapper {
-    fun toEvent(document: QueryDocumentSnapshot): Event {
+    fun toEvent(document: DocumentSnapshot): Event {
         val id = document.id
         val title = document.getString("Title")!!
         val place = document.getString("Place")!!

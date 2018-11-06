@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.nmp90.bghistory.myapplication.R
+import com.nmp90.bghistory.myapplication.eventDetails.EventDetailsFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.koin.android.ext.android.inject
@@ -45,6 +46,9 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
     }
 
     override fun onEventClick(event: Event) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.container, EventDetailsFragment.newInstance(event.id))
+            .addToBackStack(EventDetailsFragment::class.java.name)
+            .commit()
     }
 }
