@@ -4,22 +4,24 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 
 class EventMapper {
     fun toEvent(document: QueryDocumentSnapshot): Event {
-        val title = document.getString("title")!!
-        val place = document.getString("place")!!
-        val leader = document.getString("leader")!!
-        val year = document.getString("year")!!
-        val result = document.getString("result")!!
-        val description = document.getString("description")!!
-        val topic = document.getDouble("topic")!!.toInt()
+        val id = document.id
+        val title = document.getString("Title")!!
+        val place = document.getString("Place")!!
+        val leader = document.getString("Leader")!!
+        val year = document.getString("Year")!!
+        val result = document.getString("Result")!!
+        val description = document.getString("Description")!!
+        val topic = document.getDouble("Topic")!!.toInt()
 
         return Event(
+            id,
             title,
-                    place,
-                    leader,
-                    year,
-                    result,
-                    description,
-                    topic
+            place,
+            leader,
+            year,
+            result,
+            description,
+            topic
         )
     }
 }
