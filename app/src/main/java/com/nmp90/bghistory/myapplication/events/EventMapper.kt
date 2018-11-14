@@ -7,7 +7,7 @@ class EventMapper {
         val id = document.id
         val title = document.getString("Title")!!
         val place = document.getString("Place")!!
-        val leader = document.getString("Leader")!!
+        val leader = document.getString("Leader")
         val year = document.getString("Year")!!
         val result = document.getString("Result")!!
         val description = document.getString("Description")!!

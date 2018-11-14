@@ -7,5 +7,7 @@
     <string name="years_search_hint">Търси година или събитие</string>
 
     <string name="activity_capital_detail">Детайли за столица</string>
+    <string name="event_details_year_place">%1$s, %2$s</string>
+    <string name="event_details_leader">Ръководител: %1$s</string>
 
 </resources>
