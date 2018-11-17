@@ -12,7 +12,7 @@ class CapitalsRepository(private val db: FirebaseFirestore, private val capitalM
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val capitalList = task.result!!.map { capitalMapper.toCapital(it) }
-                        emitter.onSuccess(capitalList)
+                        emitter.onSuccess(capitalList.sortedBy { it.index })
                     } else {
                         emitter.onError(task.exception!!)
                     }

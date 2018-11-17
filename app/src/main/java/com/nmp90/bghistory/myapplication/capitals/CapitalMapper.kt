@@ -4,6 +4,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 
 class CapitalMapper {
     fun toCapital(document: QueryDocumentSnapshot): Capital {
+        val index = document.getDouble("Index")!!.toInt()
         val name = document.getString("Name")!!
         val period = document.getString("Period")!!
         val picture = document.getString("Picture")!!
@@ -12,7 +13,7 @@ class CapitalMapper {
         val lng = document.getString("Lng")!!
         val citizens = document.getDouble("Citizens")!!
         return Capital(
-            name, period, picture, content, lat, lng, citizens.toInt()
+            index, name, period, picture, content, lat, lng, citizens.toInt()
         )
     }
 }

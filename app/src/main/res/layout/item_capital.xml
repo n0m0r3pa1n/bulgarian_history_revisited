@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="capital" type="com.nmp90.bghistory.myapplication.capitals.Capital"/>
     </data>
 
-    <android.support.v7.widget.LinearLayoutCompat
+    <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            card_view:cardCornerRadius="4dp">
 
-        <android.support.v7.widget.AppCompatImageView
-                app:imageUrl="@{capital.picture}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <TextView
-                android:id="@+id/tv_capital_name"
+        <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{capital.name}"
-                android:padding="10dp"
-                style="@style/TextAppearance.AppCompat.Title"
-        />
-    </android.support.v7.widget.LinearLayoutCompat>
+                android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatImageView
+                    app:imageUrl="@{capital.picture}"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"/>
+
+            <TextView
+                    android:id="@+id/tv_capital_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@{capital.name}"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    style="@style/TextAppearance.AppCompat.Title"
+            />
+
+            <TextView
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:text="@{capital.period}"
+                    tools:text="02.01.1989"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.CardView>
 </layout>
