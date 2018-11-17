@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import com.nmp90.bghistory.myapplication.R
 import com.nmp90.bghistory.myapplication.databinding.ItemCapitalBinding
 
-class CapitalsAdapter(private val capitals: List<Capital>) : RecyclerView.Adapter<CapitalsAdapter.ViewHolder>() {
+class CapitalsAdapter(private val capitals: List<Capital>, private val capitalClickListener: CapitalClickListener) :
+    RecyclerView.Adapter<CapitalsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, p1: Int): ViewHolder {
         val binding: ItemCapitalBinding = DataBindingUtil.inflate(
@@ -17,6 +18,13 @@ class CapitalsAdapter(private val capitals: List<Capital>) : RecyclerView.Adapte
             false
         )
         val viewHolder = ViewHolder(binding)
+        binding.root.setOnClickListener {_ ->
+            if(viewHolder.adapterPosition == RecyclerView.NO_POSITION) {
+                return@setOnClickListener
+            }
+
+            capitalClickListener.onCapitalClick(capitals[viewHolder.adapterPosition])
+        }
 
         return viewHolder
     }
@@ -33,5 +41,9 @@ class CapitalsAdapter(private val capitals: List<Capital>) : RecyclerView.Adapte
             binding.capital = capital
             binding.executePendingBindings()
         }
+    }
+
+    interface CapitalClickListener {
+        fun onCapitalClick(capital: Capital)
     }
 }

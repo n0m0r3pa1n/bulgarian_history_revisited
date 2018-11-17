@@ -20,4 +20,21 @@ class CapitalsRepository(private val db: FirebaseFirestore, private val capitalM
 
         }
     }
+
+    fun getCapital(capitalId: String): Single<Capital> {
+        return Single.create { emitter ->
+            db.collection("capitals")
+                .document(capitalId)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val capital = capitalMapper.toCapital(task.result!!)
+                        emitter.onSuccess(capital)
+                    } else {
+                        emitter.onError(task.exception!!)
+                    }
+                }
+
+        }
+    }
 }

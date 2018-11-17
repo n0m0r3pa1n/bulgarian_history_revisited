@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".events.EventsActivity" android:label="@string/events_and_years"/>
+        <activity android:name=".capitalDetails.CapitalDetailsActivity" android:label="@string/capitals"/>
     </application>
 
 </manifest>
