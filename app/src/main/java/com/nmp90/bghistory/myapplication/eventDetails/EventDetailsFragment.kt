@@ -14,12 +14,13 @@ import org.koin.android.ext.android.inject
 class EventDetailsFragment : Fragment() {
 
     private val eventsRepository: EventsRepository by inject()
+    private var oldTitle: CharSequence? = null
 
     companion object {
 
         private val ARG_EVENT_ID = "eventID"
 
-        fun newInstance(eventId: String) : EventDetailsFragment {
+        fun newInstance(eventId: String): EventDetailsFragment {
             val eventDetailsFragment = EventDetailsFragment()
             val args = Bundle()
             args.putString(ARG_EVENT_ID, eventId)
@@ -27,14 +28,22 @@ class EventDetailsFragment : Fragment() {
             return eventDetailsFragment
         }
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentEventDetailsBinding.inflate(inflater, container, false)
         eventsRepository.getEvent(arguments!!.getString(ARG_EVENT_ID)!!).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({event ->
+            .subscribe({ event ->
+                oldTitle = activity?.title
+                activity?.title = event.title
                 binding.event = event
             })
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        activity?.title = oldTitle
+        super.onDestroyView()
     }
 }

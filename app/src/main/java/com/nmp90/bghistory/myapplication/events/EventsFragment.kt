@@ -2,6 +2,7 @@ package com.nmp90.bghistory.myapplication.events
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.koin.android.ext.android.inject
 
+
 class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
 
     private val eventsRepository: EventsRepository by inject()
@@ -21,7 +23,7 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
 
         private val ARG_TOPIC_ID = "topic"
 
-        fun newInstance(topicId: Int) : EventsFragment {
+        fun newInstance(topicId: Int): EventsFragment {
             val eventsFragment = EventsFragment()
             val args = Bundle()
             args.putInt(ARG_TOPIC_ID, topicId)
@@ -33,7 +35,13 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_events, container, false)
         val rvEvents: RecyclerView = view.findViewById(R.id.rv_events)
-        rvEvents.layoutManager = LinearLayoutManager(requireContext())
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        rvEvents.layoutManager = linearLayoutManager
+        val dividerItemDecoration = DividerItemDecoration(
+            rvEvents.context,
+            linearLayoutManager.orientation
+        )
+        rvEvents.addItemDecoration(dividerItemDecoration)
 
         val topicId = arguments!!.getInt(ARG_TOPIC_ID)
         eventsRepository.getEvents(topicId)

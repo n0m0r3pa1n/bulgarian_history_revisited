@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewPager() {
         val adapter = MainFragmentPagerAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.main_viewpager)
+        viewPager.offscreenPageLimit = 3
         viewPager.adapter = adapter
 
         viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
