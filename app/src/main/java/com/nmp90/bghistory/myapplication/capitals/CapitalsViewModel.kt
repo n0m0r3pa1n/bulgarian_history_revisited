@@ -8,6 +8,8 @@ import io.reactivex.schedulers.Schedulers
 class CapitalsViewModel constructor(private val capitalsRepository: CapitalsRepository) : LifecycleViewModel() {
 
     fun getCapitals() = capitalsRepository.getCapitals()
+        .doOnError { exception.set(it) }
+        .onErrorReturn { emptyList() }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .toLiveData()

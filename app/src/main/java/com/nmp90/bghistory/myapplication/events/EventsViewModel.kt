@@ -12,6 +12,8 @@ class EventsViewModel constructor(private val eventsRepository: EventsRepository
     val displayedChildId = ObservableInt(R.id.pb_loading)
 
     fun getEvents(topicId: Int) = eventsRepository.getEvents(topicId)
+        .doOnError { exception.set(it) }
+        .onErrorReturn { emptyList() }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSuccess { displayedChildId.set(R.id.rv_events) }
