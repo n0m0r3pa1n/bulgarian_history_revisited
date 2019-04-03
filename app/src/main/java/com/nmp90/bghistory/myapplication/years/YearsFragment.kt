@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.myapplication.R
+import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class YearsFragment : Fragment() {
@@ -56,14 +56,14 @@ class YearsFragment : Fragment() {
     }
 
     private fun loadEvents() {
-        yearsViewModel.getYears().observe(this, Observer {
+        yearsViewModel.getYears().subscribeSingle(this, onSuccess = {
             adapter = YearsAdapter(it.toMutableList())
             rvYears.adapter = adapter
         })
     }
 
     private fun searchEvents(query: String) {
-        yearsViewModel.searchYears(query).observe(this, Observer {
+        yearsViewModel.searchYears(query).subscribeSingle(this, onSuccess =  {
             adapter?.setData(it)
             adapter?.notifyDataSetChanged()
         })

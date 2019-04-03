@@ -2,7 +2,7 @@ package com.nmp90.bghistory.myapplication.events
 
 import androidx.databinding.ObservableInt
 import com.nmp90.bghistory.myapplication.R
-import com.nmp90.bghistory.myapplication.extensions.toLiveData
+import com.nmp90.bghistory.myapplication.extensions.toReactiveSource
 import com.nmp90.bghistory.myapplication.lifecycle.LifecycleViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -17,6 +17,6 @@ class EventsViewModel constructor(private val eventsRepository: EventsRepository
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSuccess { displayedChildId.set(R.id.rv_events) }
-        .toLiveData()
+        .toReactiveSource()
 
 }

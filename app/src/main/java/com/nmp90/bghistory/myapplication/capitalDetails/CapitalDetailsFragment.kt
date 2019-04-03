@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.nmp90.bghistory.myapplication.databinding.FragmentCapitalDetailsBinding
+import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -33,18 +33,16 @@ class CapitalDetailsFragment : Fragment() {
 
         val capitalId = arguments!!.getString(CapitalDetailsFragment.ARG_CAPITAL_ID)
         capitalDetailsViewModel.getCapital(capitalId!!)
-            .observe(this, Observer {
+            .subscribeSingle(this, onSuccess = {
                 binding.capital = it
-                binding.btnCapitalDetailsLocation.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(v: View?) {
-                        val intent = Intent(
-                            android.content.Intent.ACTION_VIEW,
-                            Uri.parse("http://maps.google.com/maps?q=${it.lat},${it.lng}")
-                        )
+                binding.btnCapitalDetailsLocation.setOnClickListener { _ ->
+                    val intent = Intent(
+                        android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?q=${it.lat},${it.lng}")
+                    )
 
-                        startActivity(intent)
-                    }
-                })
+                    startActivity(intent)
+                }
             })
         return binding.root
     }

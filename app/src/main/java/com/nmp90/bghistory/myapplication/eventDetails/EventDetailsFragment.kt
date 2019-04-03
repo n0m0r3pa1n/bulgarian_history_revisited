@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.nmp90.bghistory.myapplication.R
 import com.nmp90.bghistory.myapplication.binding.setDisplayedChildId
 import com.nmp90.bghistory.myapplication.databinding.FragmentEventDetailsBinding
+import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EventDetailsFragment : Fragment() {
@@ -32,7 +32,7 @@ class EventDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentEventDetailsBinding.inflate(inflater, container, false)
         binding.rootContainer.setDisplayedChildId(R.id.loader)
-        eventsViewModel.getEvent(arguments!!.getString(ARG_EVENT_ID)!!).observe(this, Observer { event ->
+        eventsViewModel.getEvent(arguments!!.getString(ARG_EVENT_ID)!!).subscribeSingle(this, onSuccess = { event ->
             oldTitle = activity?.title
             activity?.title = event.title
             binding.event = event

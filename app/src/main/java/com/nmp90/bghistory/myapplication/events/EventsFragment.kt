@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nmp90.bghistory.myapplication.R
 import com.nmp90.bghistory.myapplication.databinding.FragmentEventsBinding
 import com.nmp90.bghistory.myapplication.eventDetails.EventDetailsFragment
+import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -45,7 +45,7 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
 
         val topicId = arguments!!.getInt(ARG_TOPIC_ID)
         eventsViewModel.getEvents(topicId)
-            .observe(this, Observer {
+            .subscribeSingle(this, onSuccess =  {
                 binding.rvEvents.adapter = EventsAdapter(it, this)
             })
 
