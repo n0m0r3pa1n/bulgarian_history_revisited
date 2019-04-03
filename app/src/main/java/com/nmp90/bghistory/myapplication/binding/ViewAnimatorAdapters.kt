@@ -1,9 +1,9 @@
 package com.nmp90.bghistory.myapplication.binding
 
-import android.databinding.BindingAdapter
-import android.support.annotation.IdRes
 import android.view.ViewGroup
 import android.widget.ViewAnimator
+import androidx.annotation.IdRes
+import androidx.databinding.BindingAdapter
 
 object ViewAnimatorAdapters {
     @JvmStatic

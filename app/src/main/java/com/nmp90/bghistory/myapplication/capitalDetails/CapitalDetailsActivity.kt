@@ -3,8 +3,8 @@ package com.nmp90.bghistory.myapplication.capitalDetails
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.nmp90.bghistory.myapplication.R
 
 class CapitalDetailsActivity : AppCompatActivity() {

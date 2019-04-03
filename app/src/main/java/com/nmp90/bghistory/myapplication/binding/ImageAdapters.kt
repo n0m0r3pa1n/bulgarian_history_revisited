@@ -1,7 +1,7 @@
 package com.nmp90.bghistory.myapplication.binding
 
-import android.databinding.BindingAdapter
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 
 

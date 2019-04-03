@@ -13,7 +13,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
         <!-- A CardView that contains a TextView -->
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view"
                 android:layout_gravity="center"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 card_view:cardCornerRadius="4dp">
 
-            <android.support.v4.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -91,7 +91,7 @@
 
                     </LinearLayout>
                 </ViewAnimator>
-            </android.support.v4.widget.NestedScrollView>
-        </android.support.v7.widget.CardView>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </layout>

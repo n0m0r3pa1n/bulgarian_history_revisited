@@ -1,8 +1,8 @@
 package com.nmp90.bghistory.myapplication
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.nmp90.bghistory.myapplication.capitals.CapitalsFragment
 import com.nmp90.bghistory.myapplication.topics.TopicsFragment
 import com.nmp90.bghistory.myapplication.years.YearsFragment

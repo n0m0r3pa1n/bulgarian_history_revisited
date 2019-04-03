@@ -1,10 +1,10 @@
 package com.nmp90.bghistory.myapplication.eventDetails
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.nmp90.bghistory.myapplication.R
 import com.nmp90.bghistory.myapplication.binding.setDisplayedChildId
 import com.nmp90.bghistory.myapplication.databinding.FragmentEventDetailsBinding
