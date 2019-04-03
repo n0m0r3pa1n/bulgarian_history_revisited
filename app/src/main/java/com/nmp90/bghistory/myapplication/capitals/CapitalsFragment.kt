@@ -6,36 +6,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout.VERTICAL
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.myapplication.R
 import com.nmp90.bghistory.myapplication.capitalDetails.CapitalDetailsActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CapitalsFragment : Fragment(), CapitalsAdapter.CapitalClickListener {
-    private val capitalsRepository: CapitalsRepository by inject()
+    private val capitalsViewModel: CapitalsViewModel by viewModel()
 
     private lateinit var rvCapitals: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_capitals, container, false)
         rvCapitals = view.findViewById(R.id.rv_capitals)
-        rvCapitals.layoutManager = GridLayoutManager(context, 2, VERTICAL, false)
+        rvCapitals.layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
 
         loadCapitals()
         return view
     }
 
     private fun loadCapitals() {
-        capitalsRepository.getCapitals()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { it ->
-                val adpater = CapitalsAdapter(it.toMutableList(), this)
-                rvCapitals.adapter = adpater
-            }
+        capitalsViewModel.getCapitals().observe(this, Observer {
+            val adapter = CapitalsAdapter(it.toMutableList(), this)
+            rvCapitals.adapter = adapter
+        })
     }
 
     override fun onCapitalClick(capital: Capital) {

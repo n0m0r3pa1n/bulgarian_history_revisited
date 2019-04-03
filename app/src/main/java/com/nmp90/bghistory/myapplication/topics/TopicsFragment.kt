@@ -5,17 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.myapplication.R
 import com.nmp90.bghistory.myapplication.events.EventsActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TopicsFragment : Fragment(), TopicsAdapter.TopicClickListener {
 
-    private val topicsRepoository: TopicsRepository by inject()
+    private val topicsViewModel: TopicsViewModel by viewModel()
     private lateinit var rvTopics: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -23,13 +22,11 @@ class TopicsFragment : Fragment(), TopicsAdapter.TopicClickListener {
         rvTopics = view.findViewById(R.id.rv_topics)
         rvTopics.layoutManager = LinearLayoutManager(requireContext())
 
-        topicsRepoository.getTopics()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ topics ->
-                val adapter = TopicsAdapter(topics, this)
-                rvTopics.adapter = adapter
-            })
+        topicsViewModel.getTopics().observe(this, Observer {
+            val adapter = TopicsAdapter(it, this)
+            rvTopics.adapter = adapter
+        })
+
         return view
     }
 

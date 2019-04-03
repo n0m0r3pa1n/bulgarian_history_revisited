@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.myapplication.R
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class YearsFragment : Fragment() {
 
     private lateinit var rvYears: RecyclerView
-    private val yearsRepository: YearsRepository by inject()
+    private val yearsViewModel: YearsViewModel by viewModel()
     private var adapter: YearsAdapter? = null
 
 
@@ -34,7 +33,7 @@ class YearsFragment : Fragment() {
         val searchItem = menu.findItem(R.id.action_search)
         searchItem.isVisible = true
         val searchView: SearchView = searchItem.actionView as SearchView
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchEvents(query ?: "")
                 return true
@@ -48,22 +47,16 @@ class YearsFragment : Fragment() {
     }
 
     private fun loadEvents() {
-        yearsRepository.getYears()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { it ->
-                adapter = YearsAdapter(it.toMutableList())
-                rvYears.adapter = adapter
-            }
+        yearsViewModel.getYears().observe(this, Observer {
+            adapter = YearsAdapter(it.toMutableList())
+            rvYears.adapter = adapter
+        })
     }
 
     private fun searchEvents(query: String) {
-        yearsRepository.searchYears(query)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { it ->
-                adapter?.setData(it)
-                adapter?.notifyDataSetChanged()
-            }
+        yearsViewModel.searchYears(query).observe(this, Observer {
+            adapter?.setData(it)
+            adapter?.notifyDataSetChanged()
+        })
     }
 }

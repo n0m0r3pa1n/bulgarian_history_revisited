@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.nmp90.bghistory.myapplication.capitals.CapitalsRepository
+import androidx.lifecycle.Observer
 import com.nmp90.bghistory.myapplication.databinding.FragmentCapitalDetailsBinding
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CapitalDetailsFragment : Fragment() {
-    private val capitalsRepository: CapitalsRepository by inject()
+    private val capitalDetailsViewModel: CapitalDetailsViewModel by viewModel()
 
     companion object {
 
@@ -31,12 +29,8 @@ class CapitalDetailsFragment : Fragment() {
         val binding = FragmentCapitalDetailsBinding.inflate(inflater, container, false)
 
         val capitalId = arguments!!.getString(CapitalDetailsFragment.ARG_CAPITAL_ID)
-        capitalsRepository.getCapital(capitalId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ capital ->
-                binding.capital = capital
-            })
+        capitalDetailsViewModel.getCapital(capitalId!!)
+            .observe(this, Observer { binding.capital = it })
         return binding.root
     }
 }
