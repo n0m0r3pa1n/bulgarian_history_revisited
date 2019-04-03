@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.myapplication.R
+import com.nmp90.bghistory.myapplication.databinding.FragmentEventsBinding
 import com.nmp90.bghistory.myapplication.eventDetails.EventDetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,20 +32,24 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_events, container, false)
-        val rvEvents: RecyclerView = view.findViewById(R.id.rv_events)
+        val binding = FragmentEventsBinding.inflate(LayoutInflater.from(activity), container, false)
+        binding.viewModel = eventsViewModel
+
         val linearLayoutManager = LinearLayoutManager(requireContext())
-        rvEvents.layoutManager = linearLayoutManager
+        binding.rvEvents.layoutManager = linearLayoutManager
         val dividerItemDecoration = DividerItemDecoration(
-            rvEvents.context,
+            binding.rvEvents.context,
             linearLayoutManager.orientation
         )
-        rvEvents.addItemDecoration(dividerItemDecoration)
+        binding.rvEvents.addItemDecoration(dividerItemDecoration)
 
         val topicId = arguments!!.getInt(ARG_TOPIC_ID)
-        eventsViewModel.getEvents(topicId).observe(this, Observer { rvEvents.adapter = EventsAdapter(it, this) })
+        eventsViewModel.getEvents(topicId)
+            .observe(this, Observer {
+                binding.rvEvents.adapter = EventsAdapter(it, this)
+            })
 
-        return view
+        return binding.root
     }
 
     override fun onEventClick(event: Event) {

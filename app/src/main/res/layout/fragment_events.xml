@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@color/white"
-        android:focusable="true"
-        android:id="@+id/rv_events"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel" type="com.nmp90.bghistory.myapplication.events.EventsViewModel"/>
 
-</androidx.recyclerview.widget.RecyclerView>
+        <import type="android.view.View"/>
+        <import type="com.nmp90.bghistory.myapplication.extensions.StringKt"/>
+    </data>
+    <ViewAnimator
+            app:displayedChildId="@{viewModel.displayedChildId}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:background="@color/white"
+                android:focusable="true"
+                android:id="@+id/rv_events"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </ViewAnimator>
+</layout>

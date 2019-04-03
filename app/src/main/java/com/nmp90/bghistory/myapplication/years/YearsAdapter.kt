@@ -1,10 +1,10 @@
 package com.nmp90.bghistory.myapplication.years
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.myapplication.R
 
 class YearsAdapter(private val yearsList: MutableList<Year>) : RecyclerView.Adapter<YearsAdapter.ViewHolder>() {
@@ -23,10 +23,12 @@ class YearsAdapter(private val yearsList: MutableList<Year>) : RecyclerView.Adap
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val tvName: TextView = view.findViewById(R.id.tv_year_name)
+        private val tvYear: TextView = view.findViewById(R.id.tv_year)
+        private val tvName: TextView = view.findViewById(R.id.tv_name)
 
 
         fun bind(year: Year) {
+            tvYear.text = tvName.context.getString(R.string.year_period, year.year)
             tvName.text = year.name
         }
     }

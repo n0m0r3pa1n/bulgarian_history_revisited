@@ -5,6 +5,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.myapplication.R
@@ -21,7 +22,15 @@ class YearsFragment : Fragment() {
         setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_years, container, false)
         rvYears = view.findViewById(R.id.rv_events_years)
-        rvYears.layoutManager = LinearLayoutManager(activity)
+
+        val layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        rvYears.layoutManager = layoutManager
+
+        val dividerItemDecoration = DividerItemDecoration(
+            rvYears.context,
+            layoutManager.orientation
+        )
+        rvYears.addItemDecoration(dividerItemDecoration)
 
         loadEvents()
 
