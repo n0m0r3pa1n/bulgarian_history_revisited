@@ -1,41 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="capital" type="com.nmp90.bghistory.myapplication.capitals.Capital"/>
+
+        <import type="com.nmp90.bghistory.myapplication.extensions.StringKt"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                  android:orientation="vertical"
-                  android:background="@color/white"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
         <!-- A CardView that contains a TextView -->
         <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                card_view:cardCornerRadius="4dp">
+                app:cardCornerRadius="4dp">
 
             <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <LinearLayout
+                        android:padding="8dp"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="30sp"
+                                android:gravity="center"
+                                android:text="@{capital.name}"
+                                android:layout_centerHorizontal="true"
+                                android:id="@+id/tv_capital_detail_name"/>
 
+                        <android.support.design.widget.FloatingActionButton
+                                android:id="@+id/btn_capital_details_location"
+                                android:layout_alignParentEnd="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:rippleColor="@color/colorAccent"
+                                android:src="@drawable/ic_map_black_24dp"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_capital_detail_name"
+                                android:layout_centerHorizontal="true"
+                                android:textSize="22sp"
+                                android:gravity="center"
+                                android:text="@{capital.period}"
+                                android:id="@+id/tv_capital_detail_period"/>
+
+                        <android.support.v7.widget.AppCompatImageView
+                                android:id="@+id/iv_capital_pic"
+                                android:layout_below="@id/tv_capital_detail_period"
+                                app:imageUrl="@{capital.picture}"
+                                android:layout_marginTop="16dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"/>
+
+                    </RelativeLayout>
 
                     <TextView
-                            style="@style/TextAppearance.AppCompat.Headline"
-                            tools:text="Въстанието в Източна България"
-                            android:text="@{capital.name}"
-                            android:padding="8dp"
-                            android:gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_capital_detail_people"
+                            android:textSize="16sp"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="center_horizontal"
+                            android:text="@{capital.citizens == 0 ? @string/capital_details_no_data : @string/capital_details_people(capital.citizens)}" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/roboto_light"
+                            android:text="@{StringKt.fromHtml(capital.content)}"
+                            android:id="@+id/tv_capital_detail_desc"/>
 
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>

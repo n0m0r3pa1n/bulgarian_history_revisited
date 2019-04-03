@@ -25,56 +25,72 @@
             <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                <LinearLayout
-                        android:orientation="vertical"
+
+                <ViewAnimator
+                        android:id="@+id/root_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
 
-
-                    <TextView
-                            style="@style/TextAppearance.AppCompat.Headline"
-                            tools:text="Въстанието в Източна България"
-                            android:text="@{event.title}"
-                            android:padding="8dp"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
+                    <ProgressBar
+                            android:id="@+id/loader"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
-                    <TextView
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:visibility="@{StringKt.isNullOrEmpty(event.leader) ? View.GONE : View.VISIBLE}"
-                            android:text="@{@string/event_details_leader(event.leader)}"
+                    <LinearLayout
+                            android:id="@+id/content"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:gravity="center"
-                            tools:text="цар Симеон Велики"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content">
 
-                    <TextView
-                            style="@style/TextAppearance.AppCompat.Body1"
-                            android:text="@{@string/event_details_year_place(event.year, event.place)}"
-                            tools:text="02.01.1989"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
 
-                    <TextView
-                            style="@style/TextAppearance.AppCompat.Large"
-                            android:layout_margin="8dp"
-                            tools:text="Описание"
-                            android:text="@{StringKt.fromHtml(event.description)}"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Headline"
+                                tools:text="Въстанието в Източна България"
+                                android:text="@{event.title}"
+                                android:fontFamily="@font/roboto_light"
+                                android:padding="8dp"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
 
-                    <TextView
-                            style="@style/TextAppearance.AppCompat.Title"
-                            android:layout_margin="8dp"
-                            tools:text="Резултат"
-                            android:text="@{@string/event_details_result(event.result)}"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:visibility="@{StringKt.isNullOrEmpty(event.leader) ? View.GONE : View.VISIBLE}"
+                                android:text="@{@string/event_details_leader(event.leader)}"
+                                android:layout_width="match_parent"
+                                android:gravity="center"
+                                tools:text="цар Симеон Велики"
+                                android:layout_height="wrap_content"/>
 
-                </LinearLayout>
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:text="@{@string/event_details_year_place(event.year, event.place)}"
+                                tools:text="02.01.1989"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Large"
+                                android:layout_margin="8dp"
+                                tools:text="Описание"
+                                android:fontFamily="@font/roboto_light"
+                                android:text="@{StringKt.fromHtml(event.description)}"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:layout_margin="8dp"
+                                tools:text="Резултат"
+                                android:text="@{@string/event_details_result(event.result)}"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </ViewAnimator>
             </android.support.v4.widget.NestedScrollView>
         </android.support.v7.widget.CardView>
     </LinearLayout>

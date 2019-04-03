@@ -6,4 +6,4 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         style="@style/TextAppearance.AppCompat.Title"
-/>
+        android:fontFamily="@font/roboto_light"/>
