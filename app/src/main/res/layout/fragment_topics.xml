@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="viewModel" type="com.nmp90.bghistory.myapplication.topics.TopicsViewModel"/>
+        <variable name="viewModel" type="com.nmp90.bghistory.topics.TopicsViewModel"/>
 
         <import type="android.view.View"/>
-        <import type="com.nmp90.bghistory.myapplication.extensions.StringKt"/>
+        <import type="com.nmp90.bghistory.extensions.StringKt"/>
     </data>
     <ViewAnimator
             app:displayedChildId="@{viewModel.displayedChildId}"

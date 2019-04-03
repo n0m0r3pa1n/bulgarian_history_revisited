@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="event" type="com.nmp90.bghistory.myapplication.events.Event"/>
+        <variable name="event" type="com.nmp90.bghistory.events.Event"/>
+        <variable name="childId" type="androidx.databinding.ObservableInt" />
 
         <import type="android.view.View"/>
-        <import type="com.nmp90.bghistory.myapplication.extensions.StringKt"/>
+        <import type="com.nmp90.bghistory.extensions.StringKt"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                  android:orientation="vertical"
-                  android:background="@color/white"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
+    <LinearLayout
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <!-- A CardView that contains a TextView -->
         <androidx.cardview.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
@@ -28,6 +30,7 @@
 
                 <ViewAnimator
                         android:id="@+id/root_container"
+                        app:displayedChildId="@{childId.get()}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 

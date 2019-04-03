@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context="com.nmp90.bghistory.MainActivity">
 
     <include layout="@layout/collapsing_toolbar" />
 
@@ -25,7 +25,7 @@
             app:itemTextColor="@color/selector_bottom_nav_item"
             app:itemIconTint="@color/selector_bottom_nav_item"
             app:itemBackground="@color/colorPrimary"
-            app:layout_behavior="com.nmp90.bghistory.myapplication.coordinator.BottomNavigationBehavior"
+            app:layout_behavior="com.nmp90.bghistory.coordinator.BottomNavigationBehavior"
             app:menu="@menu/bottom_navigation_menu"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

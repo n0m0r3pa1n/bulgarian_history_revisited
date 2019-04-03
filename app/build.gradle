@@ -9,16 +9,19 @@ def koin_version = '1.0.1'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.nmp90.bghistory.myapplication"
+        applicationId "com.nmp90.bghistory"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        multiDexEnabled true
+        versionCode 24
+        versionName "3.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -41,6 +44,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     implementation "androidx.lifecycle:lifecycle-reactivestreams:2.0.0"
 
+    implementation 'com.android.support:multidex:1.0.3'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

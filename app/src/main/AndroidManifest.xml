@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.nmp90.bghistory.myapplication">
+          package="com.nmp90.bghistory">
 
     <application
             android:allowBackup="true"
@@ -8,17 +8,17 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:name=".BulgarianHistoryApplication"
+            android:name="com.nmp90.bghistory.BulgarianHistoryApplication"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.nmp90.bghistory.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".events.EventsActivity" android:label="@string/events_and_years"/>
-        <activity android:name=".capitalDetails.CapitalDetailsActivity" android:label="@string/capitals"/>
+        <activity android:name="com.nmp90.bghistory.events.EventsActivity" android:label="@string/events_and_years"/>
+        <activity android:name="com.nmp90.bghistory.capitalDetails.CapitalDetailsActivity" android:label="@string/capitals"/>
 
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
     </application>
