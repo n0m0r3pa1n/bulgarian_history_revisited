@@ -10,10 +10,4 @@
             app:actionViewClass="androidx.appcompat.widget.SearchView"
             android:title="@string/years_search_hint"/>
 
-    <item
-            android:id="@+id/menu_main_setting"
-            android:icon="@drawable/ic_launcher_foreground"
-            app:showAsAction="always"
-            android:title="@string/app_name" />
-
 </menu>
