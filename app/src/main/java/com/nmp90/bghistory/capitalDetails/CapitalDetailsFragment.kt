@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.nmp90.bghistory.ErrorHandler
 import com.nmp90.bghistory.databinding.FragmentCapitalDetailsBinding
 import com.nmp90.reactivelivedata2.subscribeSingle
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CapitalDetailsFragment : Fragment() {
     private val capitalDetailsViewModel: CapitalDetailsViewModel by viewModel()
+    private val errorHandler: ErrorHandler by inject()
 
     companion object {
 
@@ -30,20 +33,22 @@ class CapitalDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentCapitalDetailsBinding.inflate(inflater, container, false)
-
+        binding.displayedChildId = capitalDetailsViewModel.displayedChildId
         val capitalId = arguments!!.getString(ARG_CAPITAL_ID)
         capitalDetailsViewModel.getCapital(capitalId!!)
-            .subscribeSingle(this, onSuccess = {
-                binding.capital = it
-                binding.btnCapitalDetailsLocation.setOnClickListener { _ ->
-                    val intent = Intent(
-                        android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?q=${it.lat},${it.lng}")
-                    )
+            .subscribeSingle(this,
+                onSuccess = {
+                    binding.capital = it
+                    binding.btnCapitalDetailsLocation.setOnClickListener { _ ->
+                        val intent = Intent(
+                            android.content.Intent.ACTION_VIEW,
+                            Uri.parse("http://maps.google.com/maps?q=${it.lat},${it.lng}")
+                        )
 
-                    startActivity(intent)
-                }
-            })
+                        startActivity(intent)
+                    }
+                },
+                onError = { errorHandler.handleError(requireContext(), it) })
         return binding.root
     }
 }

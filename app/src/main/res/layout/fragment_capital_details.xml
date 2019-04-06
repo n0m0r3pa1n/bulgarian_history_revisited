@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="capital" type="com.nmp90.bghistory.capitals.Capital"/>
+        <variable name="displayedChildId" type="androidx.databinding.ObservableInt"/>
 
         <import type="com.nmp90.bghistory.extensions.StringKt"/>
     </data>
@@ -11,88 +12,96 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
-        <!-- A CardView that contains a TextView -->
-        <androidx.cardview.widget.CardView
-                android:id="@+id/card_view"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
+        <ViewAnimator
+                app:displayedChildId="@{displayedChildId}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp">
+                android:layout_height="match_parent">
 
-            <androidx.core.widget.NestedScrollView
+            <ProgressBar android:id="@+id/pb_loading"
+                         android:layout_gravity="center"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <LinearLayout
-                        android:padding="8dp"
-                        android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp">
+
+                <androidx.core.widget.NestedScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    <RelativeLayout
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:padding="8dp"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_height="match_parent">
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="30sp"
+                                    android:gravity="center"
+                                    android:text="@{capital.name}"
+                                    android:layout_centerHorizontal="true"
+                                    android:id="@+id/tv_capital_detail_name"/>
+
+                            <ImageView
+                                    android:id="@+id/btn_capital_details_location"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:tint="@color/blue"
+                                    android:foregroundGravity="center"
+                                    android:src="@drawable/ic_map_black_24dp"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/tv_capital_detail_name"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="22sp"
+                                    android:gravity="center"
+                                    android:text="@{capital.period}"
+                                    android:id="@+id/tv_capital_detail_period"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/iv_capital_pic"
+                                    android:layout_below="@id/tv_capital_detail_period"
+                                    app:imageUrl="@{capital.picture}"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"/>
+
+                        </RelativeLayout>
+
                         <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="30sp"
-                                android:gravity="center"
-                                android:text="@{capital.name}"
-                                android:layout_centerHorizontal="true"
-                                android:id="@+id/tv_capital_detail_name"/>
-
-                        <ImageView
-                                android:id="@+id/btn_capital_details_location"
-                                android:layout_alignParentEnd="true"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:tint="@color/blue"
-                                android:foregroundGravity="center"
-                                android:src="@drawable/ic_map_black_24dp"/>
+                                android:id="@+id/tv_capital_detail_people"
+                                android:textSize="16sp"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginBottom="8dp"
+                                android:gravity="center_horizontal"
+                                android:text="@{capital.citizens == 0 ? @string/capital_details_no_data : @string/capital_details_people(capital.citizens)}"/>
 
                         <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/tv_capital_detail_name"
-                                android:layout_centerHorizontal="true"
-                                android:textSize="22sp"
-                                android:gravity="center"
-                                android:text="@{capital.period}"
-                                android:id="@+id/tv_capital_detail_period"/>
+                                android:textSize="18sp"
+                                android:fontFamily="@font/roboto_light"
+                                android:text="@{StringKt.fromHtml(capital.content)}"
+                                android:id="@+id/tv_capital_detail_desc"/>
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/iv_capital_pic"
-                                android:layout_below="@id/tv_capital_detail_period"
-                                app:imageUrl="@{capital.picture}"
-                                android:layout_marginTop="16dp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_height="wrap_content"
-                                android:layout_width="wrap_content"/>
-
-                    </RelativeLayout>
-
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_capital_detail_people"
-                            android:textSize="16sp"
-                            android:layout_marginTop="18dp"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center_horizontal"
-                            android:text="@{capital.citizens == 0 ? @string/capital_details_no_data : @string/capital_details_people(capital.citizens)}" />
-
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@{StringKt.fromHtml(capital.content)}"
-                            android:id="@+id/tv_capital_detail_desc"/>
-
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </androidx.cardview.widget.CardView>
+        </ViewAnimator>
     </LinearLayout>
 </layout>

@@ -14,5 +14,8 @@
 
     <string name="capital_details_people">Население: %1$s</string>
     <string name="capital_details_no_data">Население: няма данни</string>
+    <string name="no_internet">Някои функционалности може да не работят без интернет връзка</string>
+    <string name="btn_ok">ОК</string>
+    <string name="error">Случи се грешка! Моля опитайте отново!</string>
 
 </resources>
