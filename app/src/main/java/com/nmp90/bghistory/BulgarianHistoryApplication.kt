@@ -3,6 +3,8 @@ package com.nmp90.bghistory
 import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nmp90.bghistory.capitalDetails.CapitalDetailsViewModel
 import com.nmp90.bghistory.capitals.CapitalMapper
@@ -18,7 +20,9 @@ import com.nmp90.bghistory.topics.TopicsViewModel
 import com.nmp90.bghistory.years.YearMapper
 import com.nmp90.bghistory.years.YearsRepository
 import com.nmp90.bghistory.years.YearsViewModel
+import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
@@ -35,6 +39,7 @@ class BulgarianHistoryApplication : MultiDexApplication() {
         single { EventsRepository(get(), get()) }
         single { CapitalsRepository(get(), get()) }
         single { TopicsRepository(get(), get()) }
+        single { ErrorHandler() }
 
         viewModel { CapitalDetailsViewModel(get()) }
         viewModel { EventsViewModel(get()) }
@@ -52,5 +57,6 @@ class BulgarianHistoryApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         startKoin(this, listOf(myModule))
+        Fabric.with(this, Crashlytics(), Answers())
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.nmp90.bghistory">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
             android:allowBackup="true"
@@ -20,6 +21,10 @@
         <activity android:name="com.nmp90.bghistory.capitalDetails.CapitalDetailsActivity" android:label="@string/capitals"/>
 
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
+
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="ec9af5c8c458dba74c36f68603aaf0787dbd95aa" />
     </application>
 
 </manifest>

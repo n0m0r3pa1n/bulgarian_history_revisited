@@ -1,22 +1,21 @@
 package com.nmp90.bghistory
 
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.nmp90.bghistory.capitals.CapitalsRepository
-import com.nmp90.bghistory.R
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.koin.android.ext.android.get
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var networkBroadcastReceiver: BroadcastReceiver
 
     private var prevMenuItem: MenuItem? = null
 
@@ -29,12 +28,13 @@ class MainActivity : AppCompatActivity() {
         setTitle(R.string.app_name)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        networkBroadcastReceiver = NetworkConnectionBroadcastReceiver()
+        registerReceiver(networkBroadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+    }
 
-        val capitalsRepository: CapitalsRepository = get()
-        val disposable2 = capitalsRepository.getCapitals()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {list -> print("${list.size} ${list.get(0).name}")}
+    override fun onDestroy() {
+        unregisterReceiver(networkBroadcastReceiver)
+        super.onDestroy()
     }
 
     private fun setupBottomNavigation() {

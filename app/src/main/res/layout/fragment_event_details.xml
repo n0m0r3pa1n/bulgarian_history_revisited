@@ -51,7 +51,7 @@
                                 style="@style/TextAppearance.AppCompat.Headline"
                                 tools:text="Въстанието в Източна България"
                                 android:text="@{event.title}"
-                                android:fontFamily="@font/roboto_light"
+                                android:fontFamily="@font/roboto_bold"
                                 android:padding="8dp"
                                 android:gravity="center"
                                 android:layout_width="match_parent"
@@ -76,18 +76,19 @@
                                 android:layout_height="wrap_content"/>
 
                         <TextView
-                                style="@style/TextAppearance.AppCompat.Large"
+                                style="@style/TextAppearance.AppCompat.Medium"
                                 android:layout_margin="8dp"
                                 tools:text="Описание"
-                                android:fontFamily="@font/roboto_light"
+                                android:fontFamily="@font/roboto"
                                 android:text="@{StringKt.fromHtml(event.description)}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
 
                         <TextView
-                                style="@style/TextAppearance.AppCompat.Title"
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_margin="8dp"
                                 tools:text="Резултат"
+                                android:fontFamily="@font/roboto_light"
                                 android:text="@{@string/event_details_result(event.result)}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>

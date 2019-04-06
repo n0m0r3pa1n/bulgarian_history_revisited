@@ -8,6 +8,7 @@
     </data>
     <ViewAnimator
             app:displayedChildId="@{viewModel.displayedChildId}"
+            android:background="@color/colorBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <ProgressBar
@@ -17,7 +18,7 @@
                 android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:background="@color/white"
+                android:background="@color/colorBackground"
                 android:focusable="true"
                 android:id="@+id/rv_topics"
                 android:layout_width="match_parent"

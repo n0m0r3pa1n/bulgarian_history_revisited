@@ -7,16 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nmp90.bghistory.ErrorHandler
 import com.nmp90.bghistory.R
 import com.nmp90.bghistory.databinding.FragmentEventsBinding
 import com.nmp90.bghistory.eventDetails.EventDetailsFragment
 import com.nmp90.reactivelivedata2.subscribeSingle
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
 
     private val eventsViewModel: EventsViewModel by viewModel()
+    private val errorHandler: ErrorHandler by inject()
 
     companion object {
 
@@ -45,9 +48,11 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
 
         val topicId = arguments!!.getInt(ARG_TOPIC_ID)
         eventsViewModel.getEvents(topicId)
-            .subscribeSingle(this, onSuccess =  {
-                binding.rvEvents.adapter = EventsAdapter(it, this)
-            })
+            .subscribeSingle(this,
+                onSuccess = {
+                    binding.rvEvents.adapter = EventsAdapter(it, this)
+                },
+                onError = { errorHandler.handleError(requireContext(), it) })
 
         return binding.root
     }

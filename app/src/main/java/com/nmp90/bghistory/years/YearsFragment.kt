@@ -9,15 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.nmp90.bghistory.ErrorHandler
 import com.nmp90.bghistory.R
 import com.nmp90.reactivelivedata2.subscribeSingle
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class YearsFragment : Fragment() {
 
-    private lateinit var rvYears: RecyclerView
     private val yearsViewModel: YearsViewModel by viewModel()
+    private val errorHandler: ErrorHandler by inject()
+
+    private lateinit var rvYears: RecyclerView
     private var adapter: YearsAdapter? = null
 
 
@@ -48,6 +52,7 @@ class YearsFragment : Fragment() {
         val searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
         searchEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         searchEditText.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        searchEditText.setHint(R.string.years_search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchEvents(query ?: "")
@@ -69,9 +74,11 @@ class YearsFragment : Fragment() {
     }
 
     private fun searchEvents(query: String) {
-        yearsViewModel.searchYears(query).subscribeSingle(this, onSuccess =  {
-            adapter?.setData(it)
-            adapter?.notifyDataSetChanged()
-        })
+        yearsViewModel.searchYears(query).subscribeSingle(this,
+            onSuccess = {
+                adapter?.setData(it)
+                adapter?.notifyDataSetChanged()
+            },
+            onError = { errorHandler.handleError(requireContext(), it) })
     }
 }
