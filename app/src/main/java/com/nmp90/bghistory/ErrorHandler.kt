@@ -3,12 +3,12 @@ package com.nmp90.bghistory
 import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class ErrorHandler {
     fun handleError(context: Context, ex: Throwable) {
         if (!BuildConfig.DEBUG) {
-            Crashlytics.logException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
         Log.e("Error", "Error happened",ex)
 

@@ -18,30 +18,20 @@ class CapitalDetailsFragment : Fragment() {
     private val capitalDetailsViewModel: CapitalDetailsViewModel by viewModel()
     private val errorHandler: ErrorHandler by inject()
 
-    companion object {
-
-        private val ARG_CAPITAL_ID = "capital"
-
-        fun newInstance(capitalId: String): CapitalDetailsFragment {
-            val capitalDetailsFragment = CapitalDetailsFragment()
-            val args = Bundle()
-            args.putString(ARG_CAPITAL_ID, capitalId)
-            capitalDetailsFragment.arguments = args
-            return capitalDetailsFragment
-        }
-    }
+    private val capitalIdArgument: String
+        get() = arguments!!.getString(ARG_CAPITAL_ID)!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentCapitalDetailsBinding.inflate(inflater, container, false)
         binding.displayedChildId = capitalDetailsViewModel.displayedChildId
-        val capitalId = arguments!!.getString(ARG_CAPITAL_ID)
+        val capitalId = arguments?.getString(ARG_CAPITAL_ID) ?: savedInstanceState?.getString(ARG_CAPITAL_ID, "")
         capitalDetailsViewModel.getCapital(capitalId!!)
             .subscribeSingle(this,
                 onSuccess = {
                     binding.capital = it
                     binding.btnCapitalDetailsLocation.setOnClickListener { _ ->
                         val intent = Intent(
-                            android.content.Intent.ACTION_VIEW,
+                            Intent.ACTION_VIEW,
                             Uri.parse("http://maps.google.com/maps?q=${it.lat},${it.lng}")
                         )
 
@@ -50,5 +40,23 @@ class CapitalDetailsFragment : Fragment() {
                 },
                 onError = { errorHandler.handleError(requireContext(), it) })
         return binding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(ARG_CAPITAL_ID, capitalIdArgument)
+        super.onSaveInstanceState(outState)
+    }
+
+    companion object {
+
+        private const val ARG_CAPITAL_ID = "capital"
+
+        fun newInstance(capitalId: String): CapitalDetailsFragment {
+            val capitalDetailsFragment = CapitalDetailsFragment()
+            val args = Bundle()
+            args.putString(ARG_CAPITAL_ID, capitalId)
+            capitalDetailsFragment.arguments = args
+            return capitalDetailsFragment
+        }
     }
 }

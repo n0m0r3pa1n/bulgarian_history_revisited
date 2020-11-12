@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var bottomNavigation: BottomNavigationView
-    private lateinit var networkBroadcastReceiver: BroadcastReceiver
+    private val networkBroadcastReceiver: BroadcastReceiver = NetworkConnectionBroadcastReceiver()
 
     private var prevMenuItem: MenuItem? = null
 
@@ -27,14 +27,16 @@ class MainActivity : AppCompatActivity() {
 
         setTitle(R.string.app_name)
         setSupportActionBar(findViewById(R.id.toolbar))
+    }
 
-        networkBroadcastReceiver = NetworkConnectionBroadcastReceiver()
+    override fun onStart() {
+        super.onStart()
         registerReceiver(networkBroadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
+        super.onStop()
         unregisterReceiver(networkBroadcastReceiver)
-        super.onDestroy()
     }
 
     private fun setupBottomNavigation() {

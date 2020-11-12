@@ -14,7 +14,7 @@ class CapitalDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events)
-        capitalId = savedInstanceState?.getString(ARG_CAPITAL_ID) ?: intent.getStringExtra(ARG_CAPITAL_ID)
+        capitalId = savedInstanceState?.getString(ARG_CAPITAL_ID) ?: intent.getStringExtra(ARG_CAPITAL_ID)!!
 
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -29,8 +29,8 @@ class CapitalDetailsActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item?.itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home) {
             this.finish()
             return true
         }

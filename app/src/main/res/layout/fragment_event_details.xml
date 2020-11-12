@@ -30,7 +30,7 @@
 
                 <ViewAnimator
                         android:id="@+id/root_container"
-                        app:displayedChildId="@{childId.get()}"
+                        app:displayedChildId="@{childId}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 

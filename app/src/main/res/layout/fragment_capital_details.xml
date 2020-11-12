@@ -56,7 +56,7 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_width="32dp"
                                     android:layout_height="32dp"
-                                    android:tint="@color/blue"
+                                    app:tint="@color/blue"
                                     android:foregroundGravity="center"
                                     android:src="@drawable/ic_map_black_24dp"/>
 
