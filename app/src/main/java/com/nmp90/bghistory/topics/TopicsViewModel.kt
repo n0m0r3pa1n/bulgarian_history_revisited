@@ -1,23 +1,33 @@
 package com.nmp90.bghistory.topics
 
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.nmp90.bghistory.R
-import com.nmp90.bghistory.extensions.toReactiveSource
 import com.nmp90.bghistory.lifecycle.LifecycleViewModel
-import com.nmp90.bghistory.lifecycle.Response
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class TopicsViewModel constructor(private val topicsRepository: TopicsRepository) : LifecycleViewModel() {
 
-    val displayedChildId = ObservableInt(R.id.pb_loading)
-    val topics = MutableLiveData<Response<List<Topic>>>()
+    val uiState = MutableStateFlow<UiState>(UiState.Empty)
+    init {
+        loadTopics()
+    }
 
-    fun loadTopics() = topicsRepository.getTopics()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSuccess { displayedChildId.set(R.id.rv_topics) }
-        .toReactiveSource()
+    private fun loadTopics() = viewModelScope.launch {
+        runCatching { topicsRepository.getTopics() }
+            .onSuccess {
+                uiState.emit(UiState.Success(topics = it))
+            }
+            .onFailure {
+                uiState.emit(UiState.Failure(throwable = it))
+            }
 
+    }
+
+    sealed class UiState(val displayedChildId: Int) {
+        data class Success(val topics: List<Topic>): UiState(R.id.rv_topics)
+        data class Failure(val throwable: Throwable) : UiState(R.id.pb_loading)
+        object Empty : UiState(R.id.pb_loading)
+    }
 }

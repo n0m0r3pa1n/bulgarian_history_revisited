@@ -12,6 +12,7 @@ inline fun <T> LiveData<Optional<T>>.subscribeSingle(owner: LifecycleOwner, cros
             when (it) {
                 is Optional.Result<T> -> onSuccess(it.result)
                 is Optional.Exception -> onError(it.throwable)
+                is Optional.Complete -> Unit
             }
         }
     })
@@ -47,6 +48,7 @@ inline fun LiveData<Optional<Nothing>>.subscribeCompletable(owner: LifecycleOwne
             when (it) {
                 is Optional.Complete -> onComplete()
                 is Optional.Exception -> onError(it.throwable)
+                else -> {}
             }
         }
     })
@@ -70,6 +72,7 @@ inline fun <T> LiveData<Optional<T>>.testSingleSubscribe(owner: Lifecycle, cross
             when (it) {
                 is Optional.Result<T> -> onSuccess(it.result)
                 is Optional.Exception -> onError(it.throwable)
+                else -> {}
             }
         }
     })
@@ -108,6 +111,7 @@ inline fun LiveData<Optional<Nothing>>.testCompletableSubscribe(owner: Lifecycle
             when (it) {
                 is Optional.Complete -> onComplete()
                 is Optional.Exception -> onError(it.throwable)
+                else -> {}
             }
         }
     })
