@@ -1,21 +1,32 @@
 package com.nmp90.bghistory.eventDetails
 
 import androidx.databinding.ObservableInt
+import androidx.lifecycle.viewModelScope
 import com.nmp90.bghistory.R
+import com.nmp90.bghistory.capitals.Capital
+import com.nmp90.bghistory.events.Event
 import com.nmp90.bghistory.events.EventsRepository
 import com.nmp90.bghistory.extensions.toReactiveSource
 import com.nmp90.bghistory.lifecycle.LifecycleViewModel
+import com.nmp90.bghistory.years.YearsViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class EventDetailsViewModel constructor(private val eventsRepository: EventsRepository) : LifecycleViewModel() {
 
-    val childId = ObservableInt(R.id.loader)
+    val uiState = MutableStateFlow<UiState>(UiState.Empty)
 
-    fun getEvent(eventId: String) = eventsRepository.getEvent(eventId)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSuccess { childId.set(R.id.content) }
-        .toReactiveSource()
+    fun getEvent(eventId: String) = viewModelScope.launch {
+        runCatching { eventsRepository.getEvent(eventId) }
+            .onFailure { uiState.emit(UiState.Failure(it)) }
+            .onSuccess { uiState.emit(UiState.Success(event = it)) }
+    }
 
+    sealed class UiState(val displayedChildId: Int) {
+        data class Success(val event: Event): UiState(R.id.content)
+        data class Failure(val throwable: Throwable) : UiState(R.id.loader)
+        object Empty : UiState(R.id.loader)
+    }
 }

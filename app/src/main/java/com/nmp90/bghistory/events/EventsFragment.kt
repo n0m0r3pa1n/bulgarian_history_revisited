@@ -11,6 +11,7 @@ import com.nmp90.bghistory.ErrorHandler
 import com.nmp90.bghistory.R
 import com.nmp90.bghistory.databinding.FragmentEventsBinding
 import com.nmp90.bghistory.eventDetails.EventDetailsFragment
+import com.nmp90.bghistory.extensions.observeViewState
 import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
 
-    private val eventsViewModel: EventsViewModel by viewModel()
+    private val viewModel: EventsViewModel by viewModel()
     private val errorHandler: ErrorHandler by inject()
 
     companion object {
@@ -34,9 +35,9 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentEventsBinding.inflate(LayoutInflater.from(activity), container, false)
-        binding.viewModel = eventsViewModel
+        binding.viewModel = viewModel
 
         val linearLayoutManager = LinearLayoutManager(requireContext())
         binding.rvEvents.layoutManager = linearLayoutManager
@@ -47,12 +48,17 @@ class EventsFragment : Fragment(), EventsAdapter.EventClickListener {
         binding.rvEvents.addItemDecoration(dividerItemDecoration)
 
         val topicId = arguments!!.getInt(ARG_TOPIC_ID)
-        eventsViewModel.getEvents(topicId)
-            .subscribeSingle(this,
-                onSuccess = {
-                    binding.rvEvents.adapter = EventsAdapter(it, this)
-                },
-                onError = { errorHandler.handleError(requireContext(), it) })
+        viewModel.getEvents(topicId)
+        observeViewState(viewModel.uiState) { uiState ->
+            binding.displayedChildId?.set(uiState.displayedChildId)
+            when (uiState) {
+                EventsViewModel.UiState.Empty -> Unit
+                is EventsViewModel.UiState.Failure -> errorHandler.handleError(requireContext(), uiState.throwable)
+                is EventsViewModel.UiState.Success -> {
+                    binding.rvEvents.adapter = EventsAdapter(uiState.events, this)
+                }
+            }
+        }
 
         return binding.root
     }
