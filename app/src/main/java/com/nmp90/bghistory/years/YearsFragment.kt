@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.ErrorHandler
 import com.nmp90.bghistory.R
+import com.nmp90.bghistory.extensions.observeViewState
 import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,12 +19,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class YearsFragment : Fragment() {
 
-    private val yearsViewModel: YearsViewModel by viewModel()
+    private val viewModel: YearsViewModel by viewModel()
     private val errorHandler: ErrorHandler by inject()
 
     private lateinit var rvYears: RecyclerView
     private var adapter: YearsAdapter? = null
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -37,16 +37,18 @@ class YearsFragment : Fragment() {
             rvYears.context,
             layoutManager.orientation
         )
+        adapter = YearsAdapter(mutableListOf())
+        rvYears.adapter = adapter
         rvYears.addItemDecoration(dividerItemDecoration)
 
-        loadEvents()
+        observeViewModel()
 
         return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        val searchItem = menu.findItem(com.nmp90.bghistory.R.id.action_search)
+        val searchItem = menu.findItem(R.id.action_search)
         searchItem.isVisible = true
         val searchView: SearchView = searchItem.actionView as SearchView
         val searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
@@ -66,19 +68,19 @@ class YearsFragment : Fragment() {
         })
     }
 
-    private fun loadEvents() {
-        yearsViewModel.getYears().subscribeSingle(this, onSuccess = {
-            adapter = YearsAdapter(it.toMutableList())
-            rvYears.adapter = adapter
-        })
+    private fun observeViewModel() {
+        observeViewState(viewModel.uiState) { uiState ->
+            when (uiState) {
+                YearsViewModel.UiState.EmptyResult -> adapter?.setData(emptyList())
+                is YearsViewModel.UiState.SearchResult -> adapter?.setData(uiState.years)
+                is YearsViewModel.UiState.YearsResult -> adapter?.setData(uiState.years)
+                is YearsViewModel.UiState.Error -> errorHandler.handleError(requireContext(), uiState.throwable)
+            }
+            adapter?.notifyDataSetChanged()
+        }
     }
 
     private fun searchEvents(query: String) {
-        yearsViewModel.searchYears(query).subscribeSingle(this,
-            onSuccess = {
-                adapter?.setData(it)
-                adapter?.notifyDataSetChanged()
-            },
-            onError = { errorHandler.handleError(requireContext(), it) })
+        viewModel.searchYears(query)
     }
 }
