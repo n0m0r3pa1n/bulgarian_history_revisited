@@ -1,7 +1,6 @@
 package com.nmp90.bghistory.years
 
 import com.google.firebase.firestore.FirebaseFirestore
-import io.reactivex.Single
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class YearsRepository(private val db: FirebaseFirestore, private val yearMapper: YearMapper) {

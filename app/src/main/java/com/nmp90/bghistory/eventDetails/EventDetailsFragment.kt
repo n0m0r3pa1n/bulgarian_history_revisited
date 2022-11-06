@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.nmp90.bghistory.ErrorHandler
 import com.nmp90.bghistory.databinding.FragmentEventDetailsBinding
 import com.nmp90.bghistory.extensions.observeViewState
-import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

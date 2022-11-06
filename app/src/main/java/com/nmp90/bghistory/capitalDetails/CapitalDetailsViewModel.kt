@@ -1,17 +1,10 @@
 package com.nmp90.bghistory.capitalDetails
 
-import androidx.databinding.ObservableInt
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nmp90.bghistory.R
 import com.nmp90.bghistory.capitals.Capital
 import com.nmp90.bghistory.capitals.CapitalsRepository
-import com.nmp90.bghistory.extensions.toReactiveSource
 import com.nmp90.bghistory.lifecycle.LifecycleViewModel
-import com.nmp90.bghistory.topics.Topic
-import com.nmp90.bghistory.topics.TopicsViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 

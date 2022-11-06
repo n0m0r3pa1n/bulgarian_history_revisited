@@ -1,7 +1,6 @@
 package com.nmp90.bghistory.capitals
 
 import com.google.firebase.firestore.FirebaseFirestore
-import io.reactivex.Single
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 

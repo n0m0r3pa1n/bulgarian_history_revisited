@@ -1,13 +1,8 @@
 package com.nmp90.bghistory.events
 
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.viewModelScope
 import com.nmp90.bghistory.R
-import com.nmp90.bghistory.eventDetails.EventDetailsViewModel
-import com.nmp90.bghistory.extensions.toReactiveSource
 import com.nmp90.bghistory.lifecycle.LifecycleViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 

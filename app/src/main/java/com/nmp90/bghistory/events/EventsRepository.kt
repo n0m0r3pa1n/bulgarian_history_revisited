@@ -1,7 +1,6 @@
 package com.nmp90.bghistory.events
 
 import com.google.firebase.firestore.FirebaseFirestore
-import io.reactivex.Single
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class EventsRepository(private val db: FirebaseFirestore, private val eventMapper: EventMapper) {
