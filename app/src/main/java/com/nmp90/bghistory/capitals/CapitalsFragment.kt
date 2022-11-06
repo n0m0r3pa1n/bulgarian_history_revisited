@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nmp90.bghistory.ErrorHandler
 import com.nmp90.bghistory.R
 import com.nmp90.bghistory.capitalDetails.CapitalDetailsActivity
+import com.nmp90.bghistory.extensions.observeViewState
 import com.nmp90.reactivelivedata2.subscribeSingle
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CapitalsFragment : Fragment(), CapitalsAdapter.CapitalClickListener {
-    private val capitalsViewModel: CapitalsViewModel by viewModel()
+    private val viewModel: CapitalsViewModel by viewModel()
     private val errorHandler: ErrorHandler by inject()
 
     private lateinit var rvCapitals: RecyclerView
@@ -30,12 +31,17 @@ class CapitalsFragment : Fragment(), CapitalsAdapter.CapitalClickListener {
     }
 
     private fun loadCapitals() {
-        capitalsViewModel.getCapitals().subscribeSingle(this,
-            onSuccess = {
-                val adapter = CapitalsAdapter(it.toMutableList(), this)
-                rvCapitals.adapter = adapter
-            },
-            onError = { errorHandler.handleError(requireContext(), it) })
+        observeViewState(viewModel.uiState) {
+            when (it) {
+                is CapitalsViewModel.UiState.Error -> {
+                    errorHandler.handleError(requireContext(), it.throwable)
+                }
+                is CapitalsViewModel.UiState.Success -> {
+                    val adapter = CapitalsAdapter(it.capitals, this)
+                    rvCapitals.adapter = adapter
+                }
+            }
+        }
     }
 
     override fun onCapitalClick(capital: Capital) {
