@@ -12,10 +12,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BulgarianHistorySearchAppBar(scrollBehavior: TopAppBarScrollBehavior) {
+fun BulgarianHistorySearchAppBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+    navController: NavController
+) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -25,7 +29,7 @@ fun BulgarianHistorySearchAppBar(scrollBehavior: TopAppBarScrollBehavior) {
             Text("Small Top App Bar")
         },
         navigationIcon = {
-            IconButton(onClick = { /* do something */ }) {
+            IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Localized description"
