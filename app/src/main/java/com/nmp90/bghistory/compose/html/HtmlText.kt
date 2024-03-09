@@ -1,5 +1,6 @@
 package com.nmp90.bghistory.compose.html
 
+import android.util.TypedValue
 import android.widget.TextView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,6 +19,7 @@ fun HtmlText(
         modifier = modifier,
         factory = { context ->
             TextView(context).apply {
+                setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20F)
                 setTextColor(
                     ContextCompat.getColor(
                         context,

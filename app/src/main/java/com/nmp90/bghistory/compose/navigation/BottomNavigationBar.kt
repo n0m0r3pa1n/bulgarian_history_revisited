@@ -2,45 +2,50 @@ package com.nmp90.bghistory.compose.navigation
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    BottomAppBar(
-        containerColor = MaterialTheme.colorScheme.primary,
-    ) {
+    BottomNavigation {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
         val bottomNavItems = listOf(
             NavigationItem.PeriodsNavGraph.Periods,
             NavigationItem.Years,
             NavigationItem.Capitals,
         )
-        val backStackEntry = navController.currentBackStackEntryAsState()
-        val currentDestination = backStackEntry.value?.destination
         bottomNavItems.forEach { item ->
-            val selected =
-                currentDestination?.hierarchy?.any { it.route == item.route } == true
+            val selected = currentDestination?.hierarchy?.any { it.route == item.route } == true
 
             BottomNavigationItem(
                 selected = selected,
-                onClick = { navController.navigate(item.route) },
+                onClick = {
+                    navController.navigate(item.route) {
+                        // Pop up to the start destination of the graph to
+                        // avoid building up a large stack of destinations
+                        // on the back stack as users select items
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
+                },
+                selectedContentColor = Color.White,
                 label = {
                     item.titleResId?.let {
                         Text(
@@ -60,37 +65,4 @@ fun BottomNavigationBar(navController: NavController) {
             )
         }
     }
-
-//    var selectedItem by remember { mutableStateOf(0) }
-//    var currentRoute by remember { mutableStateOf(NavigationItem.Periods.route) }
-//
-//    items.forEachIndexed { index, navigationItem ->
-//        if (navigationItem.route == currentRoute) {
-//            selectedItem = index
-//        }
-//    }
-//
-//    NavigationBar {
-//        items.forEachIndexed { index, item ->
-//            NavigationBarItem(
-//                alwaysShowLabel = true,
-//                icon = { Icon(item.icon!!, contentDescription = item.title) },
-//                label = { Text(item.title) },
-//                selected = selectedItem == index,
-//                onClick = {
-//                    selectedItem = index
-//                    currentRoute = item.route
-//                    navController.navigate(item.route) {
-//                        navController.graph.startDestinationRoute?.let { route ->
-//                            popUpTo(route) {
-//                                saveState = true
-//                            }
-//                        }
-//                        launchSingleTop = true
-//                        restoreState = true
-//                    }
-//                }
-//            )
-//        }
-//    }
 }

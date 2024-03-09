@@ -12,9 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.nmp90.bghistory.R
 import com.nmp90.bghistory.compose.errors.ErrorDialog
 import com.nmp90.bghistory.compose.html.HtmlText
 import com.nmp90.bghistory.compose.progress.CenteredProgressBar
@@ -49,13 +52,14 @@ fun EventDetails(
     ) {
         Text(
             text = event.title,
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(8.dp)
         )
 
         Text(
             text = "${event.year}, ${event.place}",
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(8.dp)
         )
 
@@ -65,6 +69,12 @@ fun EventDetails(
                 .padding(8.dp)
                 .fillMaxSize(),
             isInDarkTheme = isSystemInDarkTheme()
+        )
+
+        Text(
+            text = stringResource(id = R.string.event_details_result, event.result),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(8.dp)
         )
     }
 }

@@ -29,7 +29,7 @@ fun BulgarianHistorySearchAppBar(
             Text("Small Top App Bar")
         },
         navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
+            IconButton(onClick = { navController.navigateUp() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Localized description"
