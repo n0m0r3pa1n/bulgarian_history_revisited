@@ -73,6 +73,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.android.support:multidex:1.0.3'
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.6.3'
 
     def nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
