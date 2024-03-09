@@ -38,11 +38,11 @@ class BulgarianHistoryApplication : MultiDexApplication() {
         single { ErrorHandler() }
 
         viewModel { CapitalDetailsViewModel(get()) }
-        viewModel { EventsViewModel(get()) }
+        viewModel { EventsViewModel(get(), get()) }
         viewModel { TopicsViewModel(get()) }
         viewModel { YearsViewModel(get()) }
         viewModel { CapitalsViewModel(get()) }
-        viewModel { EventDetailsViewModel(get()) }
+        viewModel { EventDetailsViewModel(get(), get()) }
     }
 
     override fun attachBaseContext(base: Context?) {

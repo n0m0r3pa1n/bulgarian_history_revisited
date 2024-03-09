@@ -29,13 +29,24 @@ sealed class NavigationItem(
         object Periods : NavigationItem("periods", Icons.Rounded.List, R.string.periods)
 
         object Events : NavigationItem(
-            route = "events?eventId={eventId}",
+            route = "events?topicId={topicId}",
             icon = Icons.Rounded.List,
             titleResId = R.string.events_and_years,
-            arguments = listOf(navArgument("eventId") { type = NavType.IntType })
+            arguments = listOf(navArgument("topicId") { type = NavType.IntType })
         ) {
-            fun navigate(eventId: Int): String {
-                return "events?eventId=$eventId"
+            fun navigate(topicId: Int): String {
+                return "events?topicId=$topicId"
+            }
+        }
+
+        object Event : NavigationItem(
+            route = "events/{eventId}",
+            icon = Icons.Rounded.List,
+            titleResId = null,
+            arguments = listOf(navArgument("eventId") { type = NavType.StringType })
+        ) {
+            fun navigate(eventId: String): String {
+                return "events/$eventId"
             }
         }
     }

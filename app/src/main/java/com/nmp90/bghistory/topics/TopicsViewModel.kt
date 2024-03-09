@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 class TopicsViewModel(private val topicsRepository: TopicsRepository) : LifecycleViewModel() {
 
     val uiState = MutableStateFlow<UiState>(UiState.Empty)
-    val navigationState = MutableStateFlow<NavigationState?>(null)
 
     init {
         loadTopics()
@@ -24,21 +23,9 @@ class TopicsViewModel(private val topicsRepository: TopicsRepository) : Lifecycl
             }
     }
 
-    fun onTopicClick(topic: Topic) = viewModelScope.launch {
-        navigationState.emit(NavigationState.NavigateToTopic(topic.id))
-    }
-
-    fun navigationFinished() = viewModelScope.launch {
-        navigationState.emit(null)
-    }
-
     sealed interface UiState {
         data class Success(val topics: List<Topic>) : UiState
         data class Failure(val throwable: Throwable) : UiState
         object Empty : UiState
-    }
-
-    sealed interface NavigationState {
-        data class NavigateToTopic(val topicId: Int) : NavigationState
     }
 }
