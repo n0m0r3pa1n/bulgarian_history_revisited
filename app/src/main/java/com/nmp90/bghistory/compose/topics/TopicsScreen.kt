@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nmp90.bghistory.compose.errors.ErrorDialog
+import com.nmp90.bghistory.compose.progress.CenteredProgressBar
 import com.nmp90.bghistory.topics.Topic
 import com.nmp90.bghistory.topics.TopicsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -24,20 +25,7 @@ import org.koin.androidx.compose.koinViewModel
 fun TopicsScreen(viewModel: TopicsViewModel = koinViewModel(), onTopicClick: (topic: Topic) -> Unit) {
     val uiState = viewModel.uiState.collectAsState().value
     when (uiState) {
-        TopicsViewModel.UiState.Empty -> {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(64.dp),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                )
-            }
-        }
-
+        TopicsViewModel.UiState.Empty -> CenteredProgressBar()
         is TopicsViewModel.UiState.Failure -> ErrorDialog()
         is TopicsViewModel.UiState.Success -> {
             TopicsList(topics = uiState.topics, onTopicClick)

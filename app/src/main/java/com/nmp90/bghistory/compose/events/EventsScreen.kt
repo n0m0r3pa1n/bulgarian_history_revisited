@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nmp90.bghistory.compose.errors.ErrorDialog
+import com.nmp90.bghistory.compose.progress.CenteredProgressBar
 import com.nmp90.bghistory.events.Event
 import com.nmp90.bghistory.events.EventsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -23,16 +25,11 @@ fun EventsScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState().value
 
-    Column {
-        when (uiState) {
-            EventsViewModel.UiState.Empty -> {
-
-            }
-
-            is EventsViewModel.UiState.Failure -> TODO()
-            is EventsViewModel.UiState.Success -> {
-                EventsList(uiState.events, onEventClick)
-            }
+    when (uiState) {
+        EventsViewModel.UiState.Empty -> CenteredProgressBar()
+        is EventsViewModel.UiState.Failure -> ErrorDialog()
+        is EventsViewModel.UiState.Success -> {
+            EventsList(uiState.events, onEventClick)
         }
     }
 }
