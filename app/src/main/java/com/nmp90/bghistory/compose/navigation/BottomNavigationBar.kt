@@ -5,26 +5,23 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
+
+val bottomNavItems = listOf(
+    NavigationItem.PeriodsNavGraph.Periods,
+    NavigationItem.Years,
+    NavigationItem.Capitals,
+)
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomNavigationBar(currentDestination: NavDestination?, navController: NavController) {
     BottomNavigation {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-
-        val bottomNavItems = listOf(
-            NavigationItem.PeriodsNavGraph.Periods,
-            NavigationItem.Years,
-            NavigationItem.Capitals,
-        )
         bottomNavItems.forEach { item ->
             val selected = currentDestination?.hierarchy?.any { it.route == item.route } == true
 

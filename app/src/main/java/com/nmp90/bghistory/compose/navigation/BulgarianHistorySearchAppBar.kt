@@ -1,7 +1,7 @@
 package com.nmp90.bghistory.compose.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -12,11 +12,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.nmp90.bghistory.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BulgarianHistorySearchAppBar(
+    shouldShowBackArrow: Boolean,
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
 ) {
@@ -26,14 +29,11 @@ fun BulgarianHistorySearchAppBar(
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         title = {
-            Text("Small Top App Bar")
+            Text(stringResource(id = R.string.app_name))
         },
         navigationIcon = {
-            IconButton(onClick = { navController.navigateUp() }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Localized description"
-                )
+            if (shouldShowBackArrow) {
+                BackButton(navController)
             }
         },
         actions = {
@@ -46,4 +46,14 @@ fun BulgarianHistorySearchAppBar(
         },
         scrollBehavior = scrollBehavior
     )
+}
+
+@Composable
+private fun BackButton(navController: NavController) {
+    IconButton(onClick = { navController.navigateUp() }) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = "Localized description"
+        )
+    }
 }

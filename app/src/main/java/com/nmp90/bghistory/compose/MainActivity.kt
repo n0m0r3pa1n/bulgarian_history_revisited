@@ -10,11 +10,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nmp90.bghistory.compose.navigation.BottomNavigationBar
 import com.nmp90.bghistory.compose.navigation.BulgarianHistorySearchAppBar
 import com.nmp90.bghistory.compose.navigation.Navigations
+import com.nmp90.bghistory.compose.navigation.bottomNavItems
 import com.nmp90.bghistory.compose.theme.MyApplicationTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,10 +33,21 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val currentDestination = navBackStackEntry?.destination
+                    val shouldShowBackButton = !bottomNavItems.any {
+                        navBackStackEntry?.destination?.route?.lowercase() == it.route.lowercase()
+                    }
 
                     Scaffold(
-                        bottomBar = { BottomNavigationBar(navController) },
-                        topBar = { BulgarianHistorySearchAppBar(scrollBehavior, navController) },
+                        bottomBar = { BottomNavigationBar(currentDestination, navController) },
+                        topBar = {
+                            BulgarianHistorySearchAppBar(
+                                shouldShowBackButton,
+                                scrollBehavior,
+                                navController
+                            )
+                        },
                         content = { innerPadding ->
                             Navigations(navController = navController, innerPadding)
                         }
