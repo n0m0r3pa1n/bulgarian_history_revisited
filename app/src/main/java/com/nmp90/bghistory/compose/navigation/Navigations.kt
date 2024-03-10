@@ -15,6 +15,7 @@ import com.nmp90.bghistory.compose.eventdetails.EventDetailsScreen
 import com.nmp90.bghistory.compose.events.EventsScreen
 import com.nmp90.bghistory.compose.navigation.NavigationItem.PeriodsNavGraph
 import com.nmp90.bghistory.compose.topics.TopicsScreen
+import com.nmp90.bghistory.compose.years.YearsScreen
 
 @Composable
 fun Navigations(navController: NavHostController, innerPadding: PaddingValues) {
@@ -61,7 +62,7 @@ fun Navigations(navController: NavHostController, innerPadding: PaddingValues) {
             ) { backStack -> EventDetailsScreen() }
         }
         composable(route = NavigationItem.Years.route) {
-            CapitalsList()
+            YearsScreen()
         }
         composable(route = NavigationItem.Capitals.route) {
             CapitalsList()
