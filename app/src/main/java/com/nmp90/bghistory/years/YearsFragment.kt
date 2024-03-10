@@ -1,7 +1,11 @@
 package com.nmp90.bghistory.years
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -72,7 +76,6 @@ class YearsFragment : Fragment() {
             when (uiState) {
                 YearsViewModel.UiState.EmptyResult -> adapter?.setData(emptyList())
                 is YearsViewModel.UiState.SearchResult -> adapter?.setData(uiState.years)
-                is YearsViewModel.UiState.YearsResult -> adapter?.setData(uiState.years)
                 is YearsViewModel.UiState.Error -> errorHandler.handleError(requireContext(), uiState.throwable)
             }
             adapter?.notifyDataSetChanged()

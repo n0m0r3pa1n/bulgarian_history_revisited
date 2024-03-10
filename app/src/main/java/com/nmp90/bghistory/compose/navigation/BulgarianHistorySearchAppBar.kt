@@ -2,7 +2,6 @@ package com.nmp90.bghistory.compose.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,6 +19,7 @@ import com.nmp90.bghistory.R
 @Composable
 fun BulgarianHistorySearchAppBar(
     shouldShowBackArrow: Boolean,
+    shouldShowSearchBar: Boolean,
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
 ) {
@@ -34,14 +34,6 @@ fun BulgarianHistorySearchAppBar(
         navigationIcon = {
             if (shouldShowBackArrow) {
                 BackButton(navController)
-            }
-        },
-        actions = {
-            IconButton(onClick = { /* do something */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search years"
-                )
             }
         },
         scrollBehavior = scrollBehavior
