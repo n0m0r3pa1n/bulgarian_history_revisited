@@ -19,7 +19,6 @@ import com.nmp90.bghistory.R
 @Composable
 fun BulgarianHistorySearchAppBar(
     shouldShowBackArrow: Boolean,
-    shouldShowSearchBar: Boolean,
     scrollBehavior: TopAppBarScrollBehavior,
     navController: NavController
 ) {

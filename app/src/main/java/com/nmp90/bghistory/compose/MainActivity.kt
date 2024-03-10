@@ -16,7 +16,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nmp90.bghistory.compose.navigation.BottomNavigationBar
 import com.nmp90.bghistory.compose.navigation.BulgarianHistorySearchAppBar
-import com.nmp90.bghistory.compose.navigation.NavigationItem
 import com.nmp90.bghistory.compose.navigation.Navigations
 import com.nmp90.bghistory.compose.navigation.bottomNavItems
 import com.nmp90.bghistory.compose.theme.MyApplicationTheme
@@ -40,15 +39,11 @@ class MainActivity : ComponentActivity() {
                         navBackStackEntry?.destination?.route?.lowercase() == it.route.lowercase()
                     }
 
-                    val shouldShowSearchBar =
-                        navBackStackEntry?.destination?.route?.lowercase() == NavigationItem.Years.route
-
                     Scaffold(
                         bottomBar = { BottomNavigationBar(currentDestination, navController) },
                         topBar = {
                             BulgarianHistorySearchAppBar(
                                 shouldShowBackButton,
-                                shouldShowSearchBar,
                                 scrollBehavior,
                                 navController
                             )
