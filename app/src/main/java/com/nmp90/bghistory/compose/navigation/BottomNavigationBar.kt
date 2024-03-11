@@ -16,7 +16,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 val bottomNavItems = listOf(
     NavigationItem.PeriodsNavGraph.Periods,
     NavigationItem.Years,
-    NavigationItem.Capitals,
+    NavigationItem.CapitalsNavGraph.Capitals,
 )
 
 @Composable

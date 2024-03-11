@@ -54,5 +54,23 @@ sealed class NavigationItem(
     object Years : NavigationItem("years", Icons.Rounded.List, R.string.events_and_years)
 
 
-    object Capitals : NavigationItem("capitals", Icons.Rounded.Info, R.string.capitals)
+    object CapitalsNavGraph : NavigationItem(
+        route = "capitalsNavGraph",
+        startDestination = "capitals",
+        icon = null,
+        titleResId = null
+    ) {
+        object Capitals : NavigationItem("capitals", Icons.Rounded.Info, R.string.capitals)
+
+        object CapitalDetails : NavigationItem(
+            route = "capitals/{capitalId}",
+            icon = Icons.Rounded.List,
+            titleResId = R.string.capitals,
+            arguments = listOf(navArgument("capitalId") { type = NavType.StringType })
+        ) {
+            fun navigate(capitalId: String): String {
+                return "capitals/${capitalId}"
+            }
+        }
+    }
 }

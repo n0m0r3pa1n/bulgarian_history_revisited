@@ -10,9 +10,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.nmp90.bghistory.compose.capitals.CapitalDetailsScreen
 import com.nmp90.bghistory.compose.capitals.CapitalsScreen
 import com.nmp90.bghistory.compose.eventdetails.EventDetailsScreen
 import com.nmp90.bghistory.compose.events.EventsScreen
+import com.nmp90.bghistory.compose.navigation.NavigationItem.CapitalsNavGraph
 import com.nmp90.bghistory.compose.navigation.NavigationItem.PeriodsNavGraph
 import com.nmp90.bghistory.compose.topics.TopicsScreen
 import com.nmp90.bghistory.compose.years.YearsScreen
@@ -64,9 +66,21 @@ fun Navigations(navController: NavHostController, innerPadding: PaddingValues) {
         composable(route = NavigationItem.Years.route) {
             YearsScreen()
         }
-        composable(route = NavigationItem.Capitals.route) {
-            CapitalsScreen(onCapitalClick = {
-            })
+
+        navigation(
+            startDestination = CapitalsNavGraph.requireStartDestination(),
+            route = CapitalsNavGraph.route,
+        ) {
+            composable(route = CapitalsNavGraph.Capitals.route) {
+                CapitalsScreen(onCapitalClick = {
+                    navController.navigate(CapitalsNavGraph.CapitalDetails.navigate(it.id))
+                })
+            }
+
+            composable(
+                route = CapitalsNavGraph.CapitalDetails.route,
+                arguments = CapitalsNavGraph.CapitalDetails.arguments,
+            ) { backStack -> CapitalDetailsScreen() }
         }
     }
 }
