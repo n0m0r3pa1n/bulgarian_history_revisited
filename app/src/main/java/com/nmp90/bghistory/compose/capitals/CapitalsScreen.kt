@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -59,13 +61,15 @@ fun Capital(capital: Capital, onCapitalClick: (capital: Capital) -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .clickable { onCapitalClick(capital) },
+            .clickable { onCapitalClick(capital) }
+            .padding(4.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
         AsyncImage(
             modifier = Modifier
                 .height(150.dp)
                 .zIndex(1f),
+            contentScale = ContentScale.Crop,
             model = capital.picture,
             contentDescription = null,
         )
