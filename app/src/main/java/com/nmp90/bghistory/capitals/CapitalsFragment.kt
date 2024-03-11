@@ -39,6 +39,8 @@ class CapitalsFragment : Fragment(), CapitalsAdapter.CapitalClickListener {
                     val adapter = CapitalsAdapter(it.capitals, this)
                     rvCapitals.adapter = adapter
                 }
+
+                CapitalsViewModel.UiState.Loading -> TODO()
             }
         }
     }

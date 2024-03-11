@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.nmp90.bghistory.compose.capitals.CapitalsList
+import com.nmp90.bghistory.compose.capitals.CapitalsScreen
 import com.nmp90.bghistory.compose.eventdetails.EventDetailsScreen
 import com.nmp90.bghistory.compose.events.EventsScreen
 import com.nmp90.bghistory.compose.navigation.NavigationItem.PeriodsNavGraph
@@ -65,7 +65,8 @@ fun Navigations(navController: NavHostController, innerPadding: PaddingValues) {
             YearsScreen()
         }
         composable(route = NavigationItem.Capitals.route) {
-            CapitalsList()
+            CapitalsScreen(onCapitalClick = {
+            })
         }
     }
 }
