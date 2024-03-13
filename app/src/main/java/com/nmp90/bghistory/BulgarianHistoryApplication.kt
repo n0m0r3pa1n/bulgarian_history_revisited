@@ -37,12 +37,12 @@ class BulgarianHistoryApplication : MultiDexApplication() {
         single { TopicsRepository(get(), get()) }
         single { ErrorHandler() }
 
-        viewModel { CapitalDetailsViewModel(get()) }
-        viewModel { EventsViewModel(get()) }
+        viewModel { CapitalDetailsViewModel(get(), get()) }
+        viewModel { EventsViewModel(get(), get()) }
         viewModel { TopicsViewModel(get()) }
         viewModel { YearsViewModel(get()) }
         viewModel { CapitalsViewModel(get()) }
-        viewModel { EventDetailsViewModel(get()) }
+        viewModel { EventDetailsViewModel(get(), get()) }
     }
 
     override fun attachBaseContext(base: Context?) {

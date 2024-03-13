@@ -33,9 +33,7 @@ class EventDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentEventDetailsBinding.inflate(inflater, container, false)
 
-        viewModel.getEvent(arguments!!.getString(ARG_EVENT_ID)!!)
         observeViewState(viewModel.uiState) { uiState ->
-            binding.childId?.set(uiState.displayedChildId)
             when (uiState) {
                 EventDetailsViewModel.UiState.Empty -> Unit
                 is EventDetailsViewModel.UiState.Failure -> {

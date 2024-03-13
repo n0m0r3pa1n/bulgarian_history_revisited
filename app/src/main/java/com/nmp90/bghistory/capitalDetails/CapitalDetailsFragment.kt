@@ -18,15 +18,10 @@ class CapitalDetailsFragment : Fragment() {
     private val viewModel: CapitalDetailsViewModel by viewModel()
     private val errorHandler: ErrorHandler by inject()
 
-    private val capitalIdArgument: String
-        get() = arguments!!.getString(ARG_CAPITAL_ID)!!
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentCapitalDetailsBinding.inflate(inflater, container, false)
         val capitalId = arguments?.getString(ARG_CAPITAL_ID) ?: savedInstanceState?.getString(ARG_CAPITAL_ID, "")
-        viewModel.getCapital(capitalId!!)
         observeViewState(viewModel.uiState) { uiState ->
-            binding.displayedChildId?.set(uiState.displayedChildId)
             when (uiState) {
                 CapitalDetailsViewModel.UiState.Empty -> Unit
                 is CapitalDetailsViewModel.UiState.Failure -> {
@@ -48,11 +43,6 @@ class CapitalDetailsFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(ARG_CAPITAL_ID, capitalIdArgument)
-        super.onSaveInstanceState(outState)
     }
 
     companion object {
