@@ -35,7 +35,6 @@ class BulgarianHistoryApplication : MultiDexApplication() {
         single { EventsRepository(get(), get()) }
         single { CapitalsRepository(get(), get()) }
         single { TopicsRepository(get(), get()) }
-        single { ErrorHandler() }
 
         viewModel { CapitalDetailsViewModel(get(), get()) }
         viewModel { EventsViewModel(get(), get()) }

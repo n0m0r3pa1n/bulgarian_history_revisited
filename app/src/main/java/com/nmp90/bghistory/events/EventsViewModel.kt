@@ -2,7 +2,6 @@ package com.nmp90.bghistory.events
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.nmp90.bghistory.R
 import com.nmp90.bghistory.lifecycle.LifecycleViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -24,9 +23,9 @@ class EventsViewModel(
             .onFailure { uiState.emit(UiState.Failure(it)) }
     }
 
-    sealed class UiState(val displayedChildId: Int) {
-        data class Success(val events: List<Event>) : UiState(R.id.rv_events)
-        data class Failure(val throwable: Throwable) : UiState(R.id.pb_loading)
-        object Empty : UiState(R.id.pb_loading)
+    sealed interface UiState {
+        data class Success(val events: List<Event>) : UiState
+        data class Failure(val throwable: Throwable) : UiState
+        object Empty : UiState
     }
 }
