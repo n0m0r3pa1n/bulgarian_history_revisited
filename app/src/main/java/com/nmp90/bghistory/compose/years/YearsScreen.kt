@@ -38,7 +38,7 @@ fun YearsScreen(viewModel: YearsViewModel = koinViewModel()) {
     )
     when (uiState) {
         YearsViewModel.UiState.EmptyResult -> {
-            Text(text = "Empty")
+            Text(text = stringResource(id = R.string.no_data))
         }
 
         is YearsViewModel.UiState.Error -> CenteredProgressBar()
@@ -62,10 +62,14 @@ private fun YearItem(year: Year) {
     ) {
         Text(
             text = year.year.toString(),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
         )
         Text(
+            color = MaterialTheme.colorScheme.onSurface,
             text = year.name,
+            style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(end = 8.dp)
         )
     }
@@ -83,7 +87,10 @@ fun SearchScreen(
         onQueryChange = onSearchQueryChange,
         onSearch = {},
         placeholder = {
-            Text(text = stringResource(id = R.string.years_search_hint))
+            Text(
+                color = MaterialTheme.colorScheme.onSurface,
+                text = stringResource(id = R.string.years_search_hint)
+            )
         },
         leadingIcon = {
             Icon(
