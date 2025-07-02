@@ -19,12 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-                android:name="com.nmp90.bghistory.events.EventsActivity"
-                android:label="@string/events_and_years" />
-        <activity
-                android:name="com.nmp90.bghistory.capitalDetails.CapitalDetailsActivity"
-                android:label="@string/capitals" />
 
         <meta-data
                 android:name="preloaded_fonts"

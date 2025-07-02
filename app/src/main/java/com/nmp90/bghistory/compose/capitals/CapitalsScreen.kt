@@ -23,7 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.nmp90.bghistory.capitals.Capital
 import com.nmp90.bghistory.capitals.CapitalsViewModel
 import com.nmp90.bghistory.compose.errors.ErrorDialog

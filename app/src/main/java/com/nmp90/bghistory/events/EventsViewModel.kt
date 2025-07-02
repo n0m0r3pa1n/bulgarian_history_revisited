@@ -24,9 +24,9 @@ class EventsViewModel(
             .onFailure { uiState.emit(UiState.Failure(it)) }
     }
 
-    sealed class UiState(val displayedChildId: Int) {
-        data class Success(val events: List<Event>) : UiState(R.id.rv_events)
-        data class Failure(val throwable: Throwable) : UiState(R.id.pb_loading)
-        object Empty : UiState(R.id.pb_loading)
+    sealed interface UiState {
+        data class Success(val events: List<Event>) : UiState
+        data class Failure(val throwable: Throwable) : UiState
+        object Empty : UiState
     }
 }
