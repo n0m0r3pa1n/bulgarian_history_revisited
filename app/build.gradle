@@ -2,6 +2,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.android.application'
     id 'com.google.devtools.ksp'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
     id("org.jetbrains.kotlin.plugin.compose") version "2.2.0"
 }
 

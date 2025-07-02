@@ -7,6 +7,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 class TopicsRepository(private val db: FirebaseFirestore, private val topicMapper: TopicMapper) {
     suspend fun getTopics(): List<Topic> = suspendCancellableCoroutine { continuation ->
         db.collection("topics")
+            .orderBy("ID")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

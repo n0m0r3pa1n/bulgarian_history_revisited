@@ -7,6 +7,7 @@ class EventsRepository(private val db: FirebaseFirestore, private val eventMappe
     suspend fun getEvents(topic: Int): List<Event> = suspendCancellableCoroutine { continuation ->
         db.collection("events")
             .whereEqualTo("Topic", topic)
+            .orderBy("Year")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
