@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +37,7 @@ fun TopicsList(topics: List<Topic>, onTopicClick: (topic: Topic) -> Unit) {
     LazyColumn {
         items(topics) { topic ->
             Topic(topic, onTopicClick)
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 5.dp))
         }
     }
 }
@@ -47,6 +49,6 @@ fun Topic(topic: Topic, onTopicClick: (topic: Topic) -> Unit) {
         style = MaterialTheme.typography.headlineSmall,
         modifier = Modifier
             .clickable { onTopicClick(topic) }
-            .padding(start = 4.dp, end = 4.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
     )
 }
