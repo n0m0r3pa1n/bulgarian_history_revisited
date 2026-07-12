@@ -14,8 +14,8 @@ android {
         applicationId "com.nmp90.bghistory"
         minSdk 23
         targetSdk 37
-        versionCode 32
-        versionName "3.2.4"
+        versionCode 33
+        versionName "3.2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
