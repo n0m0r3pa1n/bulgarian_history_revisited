@@ -1,11 +1,15 @@
 package com.nmp90.bghistory.compose.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +27,7 @@ val bottomNavItems = listOf(
 @Composable
 fun BottomNavigationBar(currentDestination: NavDestination?, navController: NavController) {
     BottomNavigation(
+        modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars),
         backgroundColor = MaterialTheme.colorScheme.primary
     ) {
         bottomNavItems.forEach { item ->

@@ -1,8 +1,6 @@
 package com.nmp90.bghistory
 
-import android.content.Context
-import androidx.multidex.MultiDex
-import androidx.multidex.MultiDexApplication
+import android.app.Application
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nmp90.bghistory.capitalDetails.CapitalDetailsViewModel
@@ -23,10 +21,9 @@ import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-class BulgarianHistoryApplication : MultiDexApplication() {
+class BulgarianHistoryApplication : Application() {
     private val myModule by lazy {
         module {
-
             factory { CapitalMapper() }
             factory { TopicMapper() }
             factory { EventMapper() }
@@ -46,11 +43,6 @@ class BulgarianHistoryApplication : MultiDexApplication() {
             viewModel { CapitalsViewModel(get()) }
             viewModel { EventDetailsViewModel(get(), get()) }
         }
-    }
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
     }
 
     override fun onCreate() {
